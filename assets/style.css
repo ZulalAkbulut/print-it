@@ -132,17 +132,19 @@ header {
 	display: flex;
 }
 .dot {
-	margin-inline: 5px;
 	width: 13px;
 	height: 13px;
-	background-color: #ffffff00;
-	border: 3px solid #fff;
-	border-radius: 100%;
-	box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);;
+	border-radius: 50%;
+	background-color: transparent;
+	border: 2px solid #fff;
+	margin: 0 5px;
+	transition: background-color 0.3s ease;
 }
+
 .dot_selected {
 	background-color: #fff;
 }
+
 #banner p {
 	font-family: 'Roboto Slab', sans-serif;
 	font-weight: 900;

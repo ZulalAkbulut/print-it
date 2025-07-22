@@ -1,4 +1,3 @@
-// script.js
 const slides = [
     {
         "image": "slide1.jpg",
@@ -27,42 +26,31 @@ let currentIndex = 0;
 
 function updateDots(index) {
     dots.forEach((dot, i) => {
-        if (i === index) {
-            dot.classList.add('dot_selected');
-        } else {
-            dot.classList.remove('dot_selected');
-        }
+        dot.classList.remove('dot_selected');
     });
+    dots[index].classList.add('dot_selected');
 }
 
-function updateCarousel(index, direction) {
-      if (currentIndex === -1 && direction === 'left') {
-        currentIndex = slides.length - 1;
-    } else if (currentIndex === slides.length && direction === 'right') {
-        currentIndex = 0;
-    }
 
-    const imagePath = `assets/images/slideshow/${slides[currentIndex].image}`;
+function renderSlide(index) {
+    const imagePath = `assets/images/slideshow/${slides[index].image}`;
     bannerImg.src = imagePath;
-    bannerImg.alt = `Slide ${currentIndex + 1}`;
+    bannerImg.alt = `Slide ${index + 1}`;
+    document.querySelector('p').innerHTML = slides[index].tagLine;
+    updateDots(index);
+}
 
-    const tagLine = slides[currentIndex].tagLine;
-    document.querySelector('p').innerHTML = tagLine;
-
+function changeSlide(direction) {
+    if (direction === 'left') {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    } else if (direction === 'right') {
+        currentIndex = (currentIndex + 1) % slides.length;
+    }
+    renderSlide(currentIndex);
     console.log(`Clic sur la flèche ${direction}`);
 }
 
-arrowLeft.addEventListener('click', function () {
-    currentIndex = (currentIndex - 1);
-    updateCarousel(currentIndex, 'left');
-    updateDots(currentIndex);
-});
+arrowLeft.addEventListener('click', () => changeSlide('left'));
+arrowRight.addEventListener('click', () => changeSlide('right'));
 
-arrowRight.addEventListener('click', function () {
-    currentIndex = (currentIndex + 1) ;
-    updateCarousel(currentIndex, 'right');
-    updateDots(currentIndex);
-});
-
-updateCarousel(currentIndex, 'démarrage');
-updateDots(currentIndex); 
+renderSlide(currentIndex);
